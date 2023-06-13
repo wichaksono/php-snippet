@@ -2,9 +2,10 @@
 /**
  * @return array 
  */
-function upload_directory() {
-	$document_root = $_SERVER['DOCUMENT_ROOT'];
-	$upload_directory_name = 'uploads';
+function upload_directory($document_root = '', $upload_directory_name = 'uploads') {
+	if ( empty($document_root) ) {
+		$document_root = $_SERVER['DOCUMENT_ROOT'];
+	}
 
 	$upload_directory_path = $document_root . DIRECTORY_SEPARATOR . $upload_directory_name;
 	if ( ! is_dir($upload_directory_path) ) {
