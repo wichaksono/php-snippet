@@ -35,6 +35,8 @@ abstract class FormAbstract
         'echo'           => false
     ];
 
+    protected bool $echo;
+
     /**
      * @var Element $element
      *
@@ -52,6 +54,7 @@ abstract class FormAbstract
     public function __construct(array $formAttributes = [])
     {
         $this->formAttributes = array_merge($this->formAttributes, $formAttributes);
+        $this->echo           = $this->formAttributes['echo'];
         $this->element        = new Element($this->formAttributes['echo']);
     }
 
