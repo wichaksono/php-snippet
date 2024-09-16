@@ -27,19 +27,19 @@ require_once 'Form.php';
 
     echo $form->open();
 
-    echo $form->startElement('name', ['class' => 'mb-3']);
+    echo $form->startElement('div', ['class' => 'mb-3']);
     echo $form->element->label('name', 'Name:', ['class' => 'form-label']);
     echo $form->element->input('text', 'name', ['class' => 'form-control']);
     echo $form->endElement();
 
     // textarea
-    echo $form->startElement('name2', ['class' => 'mb-3']);
+    echo $form->startElement('div', ['class' => 'mb-3']);
     echo $form->element->label('message', 'Message:', ['class' => 'form-label']);
     echo $form->element->textarea('message', ['class' => 'form-control']);
     echo $form->endElement();
 
     // select
-    echo $form->startElement('name3', ['class' => 'mb-3']);
+    echo $form->startElement('div', ['class' => 'mb-3']);
     $options = [
         '1' => 'Option 1',
         '2' => 'Option 2',
@@ -49,6 +49,22 @@ require_once 'Form.php';
     echo $form->element->select('select', $options, ['class' => 'form-select', 'value' => '2']);
     echo $form->endElement();
 
+    echo $form->startElement('section');
+        echo $form->startElement('div', ['class' => 'mb-3 form-check form-switch']);
+            // select
+            echo $form->startElement('div', ['class' => 'mb-3']);
+            $options = [
+                '1' => 'Option 1',
+                '2' => 'Option 2',
+                '3' => 'Option 3'
+            ];
+            echo $form->element->label('select', 'Select:', ['class' => 'form-label']);
+            echo $form->element->select('select', $options, ['class' => 'form-select', 'value' => '2']);
+            echo $form->endElement();
+        echo $form->endElement();
+    echo $form->endElement();
+
+
 
     // gender radio buttons
     $options = [
@@ -57,7 +73,7 @@ require_once 'Form.php';
     ];
 
     foreach ($options as $value => $label) {
-        echo $form->startElement('name4' . $value, ['class' => 'mb-3 form-check form-switch']);
+        echo $form->startElement('div', ['class' => 'mb-3 form-check form-switch']);
         echo $form->element->input('checkbox', 'gender' . $value, [
             'class'   => 'form-check-input',
             'role'    => 'switch',
@@ -67,9 +83,15 @@ require_once 'Form.php';
         echo $form->endElement();
     }
 
+    $form->startElement('section');
+        $form->startElement('div', ['class' => 'mb-3 form-check form-switch']);
+            // label and other elements
+        $form->endElement();
+    $form->endElement();
+
 
     // agree checkbox
-    echo $form->startElement('name5', ['class' => 'mb-3 form-check']);
+    echo $form->startElement('div', ['class' => 'mb-3 form-check']);
     echo $form->element->input('checkbox', 'agree', ['class' => 'form-check-input']);
     echo $form->element->label('agree', 'I agree to the terms and conditions', ['class' => 'form-check-label']);
     echo $form->endElement();
