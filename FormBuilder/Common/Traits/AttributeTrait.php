@@ -25,6 +25,10 @@ trait AttributeTrait
     {
         $html = '';
         foreach ($attributes as $key => $value) {
+            if (is_array($value)) {
+                $value = json_encode($value);
+            }
+
             $html .= "$key='$value' ";
         }
         return trim($html);
