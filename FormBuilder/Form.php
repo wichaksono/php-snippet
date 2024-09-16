@@ -13,29 +13,60 @@ class Form extends FormAbstract
     use AttributeTrait;
 
     /**
-     * Start an HTML container element with the given ID and attributes.
+     * @var array<string> A stack to store the opened tag names.
+     */
+    private array $openTags = [];
+
+    /**
+     * Start an HTML container element with the given tag name and attributes.
      *
-     * @param string $elementId  The ID of the element.
+     * @param string $tagName The name of the HTML element.
      * @param array<string, string> $attributes Optional HTML attributes for the element.
      * @return string The opening tag of the element with attributes.
      */
-    public function startElement(string $elementId, array $attributes = []): string
+    public function startElement(string $tagName, array $attributes = []): string
     {
-        if ($this->validateId($elementId)) {
-            exit;
-        }
+        // Push the tag name to the stack
+        $this->openTags[] = $tagName;
 
-        return '<div id="' . $elementId . '" ' . $this->attributes($attributes) . '>';
+        $html = "<{$tagName} {$this->attributes($attributes)}>";
+
+        // Echo or return based on $echo property
+        return $this->output($html);
     }
 
     /**
-     * End an HTML container element.
+     * End the last opened HTML container element.
      *
-     * @return string The closing tag for a container element.
+     * @return string The closing tag for the last opened container element.
      */
     public function endElement(): string
     {
-        return '</div>';
+        // Get the last opened tag from the stack
+        $tagName = array_pop($this->openTags);
+
+        if (!$tagName) {
+            return ''; // No tag to close
+        }
+
+        $html = "</{$tagName}>";
+
+        // Echo or return based on $echo property
+        return $this->output($html);
     }
 
+    /**
+     * Output the generated HTML element.
+     *
+     * @param string $element The HTML element string.
+     * @return string The HTML element, either echoed or returned as a string.
+     */
+    private function output(string $element): string
+    {
+        if ($this->echo) {
+            echo $element;
+        }
+
+        return $element;
+    }
 }
