@@ -1,0 +1,165 @@
+<style>
+            .genealogy-body.genealogy-scroll,
+            .genealogy-item {
+                text-align: center;
+                display: inline-block;
+            }
+
+            .genealogy-item,
+            .genealogy-item .children,
+            .genealogy-item .content {
+                position: relative;
+            }
+
+            .genealogy-item .content {
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                display: inline-block;
+                margin-bottom:40px;
+                min-width: 150px;
+            }
+
+            .genealogy-item .header {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+            }
+
+            .genealogy-item .body img {
+                margin-left:auto;
+                margin-right:auto;
+            }
+
+            .genealogy-item .children .children-wrapper {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .children-wrapper .genealogy-item::after {
+                content: "";
+                position: absolute;
+                top: -20px;
+                height: 1px;
+                background-color: #ddd;
+                width: calc(100% + 10px);
+            }
+
+            .children-wrapper .genealogy-item:first-child::after {
+                left: 50%;
+                width: calc(80% + 10px);
+            }
+
+            .children-wrapper .genealogy-item:last-child::after {
+                right: 50%;
+                width: calc(50% + 10px);
+            }
+
+            .children-wrapper .genealogy-item:only-child::after {
+                display: none;
+            }
+
+            .children-wrapper .genealogy-item::before {
+                content: "";
+                height: 20px;
+                width: 1px;
+                background: #ddd;
+                position: absolute;
+                top: -20px;
+                left: 50%;
+            }
+
+            .genealogy-item.main > .content::after,
+            .children-wrapper .genealogy-item:has(.children:not(:empty)) > .content::after {
+                content: "";
+                height: 20px;
+                width: 1px;
+                background: #ddd;
+                position: absolute;
+                bottom: -20px;
+                left: 50%;
+            }
+
+            /* Menyembunyikan garis turun pada Admin 1, HRD, Operational dan Marketing */
+            .children-wrapper .genealogy-item:only-child .content::after {
+                display: none;
+            }
+
+
+        </style>
+    <div class="genealogy-body genealogy-scroll">
+        <div class="genealogy-item main">
+            <div class="content">
+                <div class="header"></div>
+                <div class="body text-center">
+                    <img src="https://placehold.co/64" class="rounded-full mb-2" alt="User">
+                    <h3>Dr. John Doe</h3>
+                    <div class="text-xs text-gray-500">CEO</div>
+                </div>
+
+            </div>
+            <div class="children">
+                <div class="children-wrapper">
+                    <div class="genealogy-item">
+                        <div class="content">
+                            <h3>Finance</h3>
+                        </div>
+                        <div class="children">
+                            <div class="children-wrapper">
+                                <div class="genealogy-item">
+                                    <div class="content">
+                                        <h3>Admin 1</h3>
+                                    </div>
+                                    <div class="children"></div>
+                                </div>
+
+                                <div class="genealogy-item">
+                                    <div class="content">
+                                        <h3>Admin 2</h3>
+                                    </div>
+                                    <div class="children">
+                                        <div class="children-wrapper">
+                                            <div class="genealogy-item">
+                                                <div class="content">
+                                                    <h3>Co Admin 2</h3>
+                                                </div>
+                                                <div class="children"></div>
+                                            </div>
+                                            <div class="genealogy-item">
+                                                <div class="content">
+                                                    <h3>Co Admin 2.1</h3>
+                                                </div>
+                                                <div class="children"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="genealogy-item">
+                        <div class="content">
+                            <h3>HRD</h3>
+                        </div>
+                        <div class="children"></div>
+                    </div>
+
+                    <div class="genealogy-item">
+                        <div class="content">
+                            <h3>Operational</h3>
+                        </div>
+                        <div class="children"></div>
+                    </div>
+
+                    <div class="genealogy-item">
+                        <div class="content">
+                            <h3>Marketing</h3>
+                        </div>
+                        <div class="children"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
