@@ -20,11 +20,19 @@ namespace NeonWebid\WhatsAppApi;
  * );
  * 
  * // Send a message to a single recipient
- * $response = $wa->sendMessage('6282133103090', 'Hello 👋 world! 🌍');
+ * $response = $wa->sendMessage('6281234563090', 'Hello 👋 world! 🌍');
  * 
  * // Send a message to multiple recipients
- * $response = $wa->sendMessage('6282133103090,6281234567890', 'Hello 👋 everyone! 🌍');
+ * $response = $wa->sendMessage('6281234563090,6281234563091', 'Hello 👋 everyone! 🌍');
  *
+ * // Send bulk messages using JSON payload
+ * $messages = [
+ *    ['phone' => '6281234563090', 'message' => 'Hello 👋 world! 🌍'],
+ *    ['phone' => '6281234563091', 'message' => 'Hello 👋 everyone! 🌍'],
+ * ];
+ * 
+ * $response = $wa->sendBulkMessage($messages);
+ * 
  * // Print the response
  * print_r($response);
  * ```
@@ -120,4 +128,45 @@ final class WablasV2
 
         return json_decode($response, true);
     }
+
+    /**
+     * Send bulk text messages using JSON payload (Wablas v2).
+     *
+     * @param array $messages Array of messages. Each item must contain 'phone', 'message', and optionally 'source'.
+     * @return array API response as associative array
+     */
+    public function sendBulkMessage(array $messages): array
+    {
+        $endpoint = $this->server . '/api/v2/send-message';
+
+        $payload = json_encode(['data' => $messages]);
+
+        $headers = [
+            'Authorization: ' . $this->token . '.' . $this->secretKey,
+            'Content-Type: application/json'
+        ];
+
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL            => $endpoint,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $payload,
+            CURLOPT_HTTPHEADER     => $headers,
+        ]);
+
+        $response = curl_exec($ch);
+        $error    = curl_error($ch);
+        curl_close($ch);
+
+        if ($error) {
+            return [
+                'success' => false,
+                'error'   => $error,
+            ];
+        }
+
+        return json_decode($response, true);
+    }
+
 }
