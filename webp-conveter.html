@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title id="seo-title">WebP Converter - Convert JPG/PNG to WebP Online & Offline</title>
+    <meta id="seo-description" name="description" content="Free, fast, and 100% secure client-side WebP converter. Convert PNG, JPG, and JPEG images to WebP format instantly in your browser without uploading to any server.">
+    <meta name="keywords" content="webp converter, convert jpg to webp, convert png to webp, offline image converter, bulk webp conversion, client-side converter, secure image compressor">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/webp-converter.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/webp-converter.html">
+    <meta id="og-title" property="og:title" content="WebP Converter - Convert JPG/PNG to WebP Online & Offline">
+    <meta id="og-description" property="og:description" content="Free, fast, and 100% secure client-side WebP converter. Convert PNG, JPG, and JPEG images to WebP format instantly in your browser without uploading to any server.">
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/webp-converter.html">
+    <meta id="twitter-title" property="twitter:title" content="WebP Converter - Convert JPG/PNG to WebP Online & Offline">
+    <meta id="twitter-description" property="twitter:description" content="Free, fast, and 100% secure client-side WebP converter. Convert PNG, JPG, and JPEG images to WebP format instantly in your browser without uploading to any server.">
+    <meta property="twitter:image" content="https://yourdomain.com/og-image.jpg">
+
+    <!-- Structured Data (JSON-LD) for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "WebP Converter",
+      "alternateName": "Konverter WebP",
+      "url": "https://yourdomain.com/webp-converter.html",
+      "image": "https://yourdomain.com/og-image.jpg",
+      "operatingSystem": "All",
+      "applicationCategory": "MultimediaApplication",
+      "browserRequirements": "Requires HTML5 Canvas support.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 p-2 rounded-lg text-white shadow-lg shadow-indigo-600/30">
+                    <!-- Icon SVG Converter -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">WebP Converter</h1>
+                    <p class="text-xs text-slate-400" data-i18n="header-subtitle">Fast & Secure Image Conversion Directly in Your Browser</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <!-- Language Switcher Selector -->
+                <div class="relative inline-flex bg-slate-800 p-1 rounded-lg border border-slate-700/80 text-xs">
+                    <button id="lang-btn-en" onclick="changeLanguage('en')" class="px-2.5 py-1 rounded-md font-medium transition-all duration-200 bg-indigo-600 text-white shadow-sm">EN</button>
+                    <button id="lang-btn-id" onclick="changeLanguage('id')" class="px-2.5 py-1 rounded-md font-medium transition-all duration-200 text-slate-400 hover:text-white">ID</button>
+                </div>
+
+                <div class="hidden sm:flex items-center space-x-2 text-xs bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700/50 text-slate-300">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span data-i18n="offline-badge">100% Offline & Private</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl w-full mx-auto px-4 py-8 flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Sisi Kiri: Panel Kontrol & Dropzone -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Dropzone Area -->
+                <div class="bg-slate-800/50 border-2 border-dashed border-slate-700 hover:border-indigo-500 transition-colors rounded-2xl p-6 text-center cursor-pointer group relative" id="drop-zone">
+                    <input type="file" id="file-input" multiple accept="image/png, image/jpeg, image/jpg" class="hidden">
+                    <div class="space-y-4">
+                        <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 border border-slate-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-slate-400 group-hover:text-indigo-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-slate-200" data-i18n="dropzone-title">Drag & drop your images here</p>
+                            <p class="text-xs text-slate-400 mt-1" data-i18n="dropzone-subtitle">Supports PNG, JPG, JPEG</p>
+                        </div>
+                        <button type="button" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 active:bg-slate-800 text-slate-200 text-xs font-semibold rounded-lg transition-colors border border-slate-600/50" data-i18n="dropzone-btn">
+                            Select Image Files
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Global Settings Panel -->
+                <div class="bg-slate-800/40 border border-slate-800 rounded-2xl p-6 space-y-6">
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400" data-i18n="settings-title">Conversion Settings</h3>
+                    
+                    <!-- Kualitas Slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-300 font-medium" data-i18n="quality-label">WebP Quality</span>
+                            <span class="font-mono bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded text-xs border border-indigo-500/20" id="quality-val">80%</span>
+                        </div>
+                        <input type="range" id="quality-range" min="10" max="100" value="80" class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-medium">
+                            <span data-i18n="quality-low">High Compression (Small)</span>
+                            <span data-i18n="quality-high">High Quality (Large)</span>
+                        </div>
+                    </div>
+
+                    <!-- Ringkasan Info Keunggulan WebP -->
+                    <div class="bg-indigo-950/20 rounded-xl p-4 border border-indigo-500/10 text-xs text-indigo-300 space-y-2">
+                        <div class="flex items-start space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-400 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                            </svg>
+                            <p data-i18n="webp-info-text">WebP format saves on average up to <strong>25% - 34%</strong> file size compared to PNG/JPG without losing significant visual quality.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sisi Kanan: Daftar File & Pratinjau -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Empty State (Jika belum ada file) -->
+                <div id="empty-state" class="bg-slate-800/20 border border-slate-800 rounded-2xl p-12 text-center flex flex-col items-center justify-center space-y-4">
+                    <div class="w-16 h-16 bg-slate-800/50 rounded-2xl flex items-center justify-center border border-slate-700/50 text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-slate-300" data-i18n="empty-title">No images uploaded yet</h3>
+                        <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto" data-i18n="empty-desc">Your images will not be uploaded to any server. All compression and conversion processes are done instantly and privately on your device.</p>
+                    </div>
+                </div>
+
+                <!-- List/Queue Container (Sembunyi jika kosong) -->
+                <div id="queue-container" class="hidden space-y-4">
+                    <!-- Action Header -->
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center space-x-2">
+                            <span data-i18n="queue-title">Image List</span>
+                            <span id="file-count" class="bg-slate-800 text-slate-300 font-mono text-xs px-2 py-0.5 rounded-full border border-slate-700">0</span>
+                        </h2>
+                        <div class="flex space-x-2">
+                            <button id="clear-all-btn" class="px-3 py-1.5 text-xs text-rose-400 hover:text-rose-300 font-medium transition-colors" data-i18n="clear-all-btn">
+                                Clear All
+                            </button>
+                            <button id="download-all-btn" class="px-4 py-1.5 text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition-colors flex items-center space-x-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                                <span data-i18n="download-all-btn">Download All (.zip)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Items List -->
+                    <div id="file-list" class="space-y-3">
+                        <!-- File Card dinamis akan di-inject disini -->
+                    </div>
+                </div>
+
+                <!-- Interactive Comparison Section (Ditampilkan saat item diklik) -->
+                <div id="compare-section" class="hidden bg-slate-800/30 border border-slate-800 rounded-2xl p-6 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400" data-i18n="comparison-title">Comparison Preview</h3>
+                        <button id="close-compare-btn" class="text-xs text-slate-500 hover:text-slate-300" data-i18n="comparison-hide">Hide</button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Original -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs text-slate-400">
+                                <span data-i18n="comp-orig-label">Original Image</span>
+                                <span id="compare-orig-size" class="font-mono"></span>
+                            </div>
+                            <div class="aspect-video bg-slate-950 rounded-xl overflow-hidden flex items-center justify-center border border-slate-800 relative">
+                                <img id="compare-orig-img" class="max-h-full max-w-full object-contain" src="" alt="Asli">
+                                <span class="absolute top-2 left-2 bg-black/60 backdrop-blur text-[10px] text-white px-2 py-0.5 rounded font-mono" data-i18n="badge-orig">Original</span>
+                            </div>
+                        </div>
+
+                        <!-- WebP -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs text-slate-400">
+                                <span data-i18n="comp-webp-label">WebP Result</span>
+                                <span id="compare-webp-size" class="font-mono text-indigo-400"></span>
+                            </div>
+                            <div class="aspect-video bg-slate-950 rounded-xl overflow-hidden flex items-center justify-center border border-slate-800 relative">
+                                <img id="compare-webp-img" class="max-h-full max-w-full object-contain" src="" alt="WebP">
+                                <span class="absolute top-2 left-2 bg-indigo-600 text-[10px] text-white px-2 py-0.5 rounded font-mono" data-i18n="badge-webp">WebP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900/40 py-6">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-slate-500 text-xs space-y-3 md:space-y-0">
+            <p>&copy; 2026 WebP Converter App. <span data-i18n="footer-copyright">Made with maximum speed and security directly in your web browser.</span></p>
+            <div class="flex space-x-4">
+                <span class="hover:text-slate-300 cursor-help" id="privacy-tooltip" data-i18n="footer-privacy">Privacy Guarantee</span>
+                <span>v1.3.0</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JSZip Library CDN (Untuk fungsionalitas Unduh Semua dalam satu ZIP) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <!-- Aplikasi Logika -->
+    <script>
+        // DOM Elements
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const emptyState = document.getElementById('empty-state');
+        const queueContainer = document.getElementById('queue-container');
+        const fileList = document.getElementById('file-list');
+        const fileCount = document.getElementById('file-count');
+        const qualityRange = document.getElementById('quality-range');
+        const qualityVal = document.getElementById('quality-val');
+        const clearAllBtn = document.getElementById('clear-all-btn');
+        const downloadAllBtn = document.getElementById('download-all-btn');
+
+        // Compare Elements
+        const compareSection = document.getElementById('compare-section');
+        const compareOrigImg = document.getElementById('compare-orig-img');
+        const compareWebpImg = document.getElementById('compare-webp-img');
+        const compareOrigSize = document.getElementById('compare-orig-size');
+        const compareWebpSize = document.getElementById('compare-webp-size');
+        const closeCompareBtn = document.getElementById('close-compare-btn');
+
+        // Localization Dictionary
+        const translations = {
+            en: {
+                "seo-title": "WebP Converter - Convert JPG/PNG to WebP Online & Offline",
+                "seo-description": "Free, fast, and 100% secure client-side WebP converter. Convert PNG, JPG, and JPEG images to WebP format instantly in your browser without uploading to any server.",
+                "header-subtitle": "Fast & Secure Image Conversion Directly in Your Browser",
+                "offline-badge": "100% Offline & Private",
+                "dropzone-title": "Drag & drop your images here",
+                "dropzone-subtitle": "Supports PNG, JPG, JPEG",
+                "dropzone-btn": "Select Image Files",
+                "settings-title": "Conversion Settings",
+                "quality-label": "WebP Quality",
+                "quality-low": "High Compression (Small)",
+                "quality-high": "High Quality (Large)",
+                "webp-info-text": "WebP format saves on average up to <strong>25% - 34%</strong> file size compared to PNG/JPG without losing significant visual quality.",
+                "empty-title": "No images uploaded yet",
+                "empty-desc": "Your images will not be uploaded to any server. All compression and conversion processes are done instantly and privately on your device.",
+                "queue-title": "Image List",
+                "clear-all-btn": "Clear All",
+                "download-all-btn": "Download All (.zip)",
+                "comparison-title": "Comparison Preview",
+                "comparison-hide": "Hide",
+                "comp-orig-label": "Original Image",
+                "comp-webp-label": "WebP Result",
+                "badge-orig": "Original",
+                "badge-webp": "WebP",
+                "footer-copyright": "Made with maximum speed and security directly in your web browser.",
+                "footer-privacy": "Privacy Guarantee",
+                "privacy-tooltip-text": "Images are processed purely via the browser's built-in HTML5 Canvas API, without uploading to third-party servers.",
+                "btn-download-title": "Download WebP",
+                "btn-remove-title": "Remove",
+                "converting": "Converting...",
+                "processing": "Processing...",
+                "failed": "Conversion Failed",
+                "saved": "Saved",
+                "larger": "Larger",
+                "compressing-zip": "Compressing to ZIP...",
+                "zip-error": "Failed to download ZIP, downloading one by one..."
+            },
+            id: {
+                "seo-title": "Konverter WebP - Ubah JPG/PNG ke WebP Online & Offline",
+                "seo-description": "Konverter WebP gratis, cepat, dan 100% aman langsung di browser Anda. Ubah gambar PNG, JPG, dan JPEG ke format WebP tanpa mengunggah ke server mana pun.",
+                "header-subtitle": "Konversi Cepat & Aman langsung di Browser Anda",
+                "offline-badge": "100% Offline & Privat",
+                "dropzone-title": "Seret & lepas gambar di sini",
+                "dropzone-subtitle": "Mendukung PNG, JPG, JPEG",
+                "dropzone-btn": "Pilih File Gambar",
+                "settings-title": "Pengaturan Konversi",
+                "quality-label": "Kualitas WebP",
+                "quality-low": "Kompresi Tinggi (Kecil)",
+                "quality-high": "Kualitas Tinggi (Besar)",
+                "webp-info-text": "Format WebP rata-rata menghemat hingga <strong>25% - 34%</strong> ukuran file dibanding PNG/JPG tanpa kehilangan kualitas visual yang signifikan.",
+                "empty-title": "Belum ada gambar yang diunggah",
+                "empty-desc": "Gambar Anda tidak akan diunggah ke server mana pun. Seluruh proses konversi dilakukan langsung secara instan dan privat di perangkat Anda.",
+                "queue-title": "Daftar Gambar",
+                "clear-all-btn": "Hapus Semua",
+                "download-all-btn": "Unduh Semua (.zip)",
+                "comparison-title": "Pratinjau Hasil Perbandingan",
+                "comparison-hide": "Sembunyikan",
+                "comp-orig-label": "Gambar Asli",
+                "comp-webp-label": "Hasil WebP",
+                "badge-orig": "Asli",
+                "badge-webp": "WebP",
+                "footer-copyright": "Dibuat dengan kecepatan penuh langsung di web browser Anda.",
+                "footer-privacy": "Garansi Privasi",
+                "privacy-tooltip-text": "Gambar diproses murni melalui API Canvas HTML5 bawaan browser, tanpa diunggah ke pihak ketiga.",
+                "btn-download-title": "Unduh WebP",
+                "btn-remove-title": "Hapus",
+                "converting": "Mengonversi...",
+                "processing": "Memproses...",
+                "failed": "Gagal Konversi",
+                "saved": "Hemat",
+                "larger": "Lebih Besar",
+                "compressing-zip": "Mengompresi ke ZIP...",
+                "zip-error": "Gagal mengunduh ZIP, mengunduh satu per satu..."
+            }
+        };
+
+        // State Store
+        let imageFiles = [];
+        let globalQuality = 0.8;
+        let currentLang = 'en';
+
+        // Initialize Language Preference
+        function initLanguage() {
+            const savedLang = localStorage.getItem('webp_converter_lang') || 'en';
+            setLanguage(savedLang);
+        }
+
+        // Switch Language
+        window.changeLanguage = function(lang) {
+            if (lang === currentLang) return;
+            setLanguage(lang);
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('webp_converter_lang', lang);
+            document.documentElement.lang = lang;
+
+            // Toggle classes for EN/ID buttons
+            const btnEn = document.getElementById('lang-btn-en');
+            const btnId = document.getElementById('lang-btn-id');
+            if (lang === 'en') {
+                btnEn.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+                btnEn.classList.remove('text-slate-400', 'hover:text-white');
+                btnId.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
+                btnId.classList.add('text-slate-400', 'hover:text-white');
+            } else {
+                btnId.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+                btnId.classList.remove('text-slate-400', 'hover:text-white');
+                btnEn.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
+                btnEn.classList.add('text-slate-400', 'hover:text-white');
+            }
+
+            // Update SEO Head tags dynamically
+            document.title = translations[lang]["seo-title"];
+            document.getElementById('seo-title').innerText = translations[lang]["seo-title"];
+            document.getElementById('seo-description').setAttribute('content', translations[lang]["seo-description"]);
+            document.getElementById('og-title').setAttribute('content', translations[lang]["seo-title"]);
+            document.getElementById('og-description').setAttribute('content', translations[lang]["seo-description"]);
+            document.getElementById('twitter-title').setAttribute('content', translations[lang]["seo-title"]);
+            document.getElementById('twitter-description').setAttribute('content', translations[lang]["seo-description"]);
+
+            // Translate static elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    elem.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Set tooltip on privacy footer
+            document.getElementById('privacy-tooltip').title = translations[lang]["privacy-tooltip-text"];
+
+            // Re-render dynamically created items to show correct translations
+            imageFiles.forEach(fileObj => {
+                updateItemStatusUI(fileObj);
+            });
+
+            // Update comparison preview text if active
+            const activeId = compareSection.dataset.activeId;
+            if (activeId) {
+                showComparison(activeId);
+            }
+        }
+
+        // Initialize App
+        qualityRange.addEventListener('input', (e) => {
+            const val = e.target.value;
+            qualityVal.textContent = val + '%';
+            globalQuality = val / 100;
+            
+            // Re-convert all images in list with new quality parameter
+            imageFiles.forEach(file => {
+                file.quality = globalQuality;
+                convertToWebp(file);
+            });
+        });
+
+        // Trigger file input click
+        dropZone.addEventListener('click', (e) => {
+            // Prevent trigger if clicking on select button nested inside dropzone
+            if (e.target.tagName !== 'INPUT') {
+                fileInput.click();
+            }
+        });
+
+        // Drag & Drop Handlers
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-indigo-500', 'bg-indigo-500/5');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-indigo-500', 'bg-indigo-500/5');
+            }, false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        // Handle File Uploads
+        function handleFiles(files) {
+            const filteredFiles = Array.from(files).filter(file => {
+                const isImage = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg';
+                return isImage;
+            });
+
+            if (filteredFiles.length === 0) return;
+
+            filteredFiles.forEach(file => {
+                const fileId = crypto.randomUUID();
+                const fileObj = {
+                    id: fileId,
+                    name: file.name,
+                    rawFile: file,
+                    originalSize: file.size,
+                    originalSrc: URL.createObjectURL(file),
+                    webpBlob: null,
+                    webpSrc: null,
+                    webpSize: 0,
+                    quality: globalQuality,
+                    status: 'pending', // 'pending' | 'converting' | 'success' | 'error'
+                    savings: 0
+                };
+                imageFiles.push(fileObj);
+                renderFileItem(fileObj);
+                convertToWebp(fileObj);
+            });
+
+            updateUIState();
+        }
+
+        // Format Bytes Helper
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+
+        // Render Individual File Item UI
+        function renderFileItem(fileObj) {
+            const itemHTML = `
+                <div id="file-card-${fileObj.id}" class="bg-slate-800/40 hover:bg-slate-800/60 transition-colors border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 cursor-pointer">
+                    <div class="flex items-center space-x-4 w-full md:w-auto" onclick="showComparison('${fileObj.id}')">
+                        <div class="w-12 h-12 bg-slate-900 rounded-lg overflow-hidden flex items-center justify-center shrink-0 border border-slate-700/50">
+                            <img src="${fileObj.originalSrc}" class="w-full h-full object-cover" alt="original thumb">
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="text-sm font-medium text-slate-200 truncate max-w-[200px] sm:max-w-[300px] md:max-w-[150px] lg:max-w-[250px]" title="${fileObj.name}">
+                                ${fileObj.name}
+                            </h4>
+                            <p class="text-xs text-slate-500 font-mono mt-0.5">${formatBytes(fileObj.originalSize)}</p>
+                        </div>
+                    </div>
+
+                    <!-- Progress / Dynamic info -->
+                    <div class="flex items-center space-x-6 w-full md:w-auto justify-between md:justify-end">
+                        <div id="status-container-${fileObj.id}" class="flex items-center space-x-4">
+                            <!-- Sizing & Savings Status -->
+                            <div class="text-right">
+                                <p class="text-xs text-slate-400 font-mono">${translations[currentLang]["converting"]}</p>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex items-center space-x-2 shrink-0">
+                            <a id="download-btn-${fileObj.id}" class="hidden p-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors" title="${translations[currentLang]['btn-download-title']}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </a>
+                            <button onclick="removeFile('${fileObj.id}')" class="p-2 hover:bg-slate-700 text-slate-400 hover:text-rose-400 rounded-lg transition-colors" title="${translations[currentLang]['btn-remove-title']}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            fileList.insertAdjacentHTML('beforeend', itemHTML);
+        }
+
+        // WebP Core Converter Engine
+        function convertToWebp(fileObj) {
+            fileObj.status = 'converting';
+            updateItemStatusUI(fileObj);
+
+            const img = new Image();
+            img.src = fileObj.originalSrc;
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                // Convert to WebP via Canvas Blob
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        // Release previous WebP URL if exists
+                        if (fileObj.webpSrc) {
+                            URL.revokeObjectURL(fileObj.webpSrc);
+                        }
+
+                        fileObj.webpBlob = blob;
+                        fileObj.webpSize = blob.size;
+                        fileObj.webpSrc = URL.createObjectURL(blob);
+                        fileObj.status = 'success';
+                        
+                        // Calculate space savings
+                        const savings = ((fileObj.originalSize - fileObj.webpSize) / fileObj.originalSize) * 100;
+                        fileObj.savings = savings.toFixed(1);
+
+                        updateItemStatusUI(fileObj);
+                    } else {
+                        fileObj.status = 'error';
+                        updateItemStatusUI(fileObj);
+                    }
+                }, 'image/webp', fileObj.quality);
+            };
+
+            img.onerror = () => {
+                fileObj.status = 'error';
+                updateItemStatusUI(fileObj);
+            };
+        }
+
+        // Update Item UI elements dynamic based on conversion state
+        function updateItemStatusUI(fileObj) {
+            const statusContainer = document.getElementById(`status-container-${fileObj.id}`);
+            const downloadBtn = document.getElementById(`download-btn-${fileObj.id}`);
+            const card = document.getElementById(`file-card-${fileObj.id}`);
+            
+            if (!statusContainer) return;
+
+            if (fileObj.status === 'converting') {
+                statusContainer.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+                        <span class="text-xs text-slate-400 font-medium">${translations[currentLang]["processing"]}</span>
+                    </div>
+                `;
+                downloadBtn.classList.add('hidden');
+            } else if (fileObj.status === 'success') {
+                const savingsLabel = fileObj.savings > 0 
+                    ? `<span class="bg-emerald-500/10 text-emerald-400 text-[10px] px-1.5 py-0.5 rounded font-bold border border-emerald-500/20">${translations[currentLang]["saved"]} ${fileObj.savings}%</span>`
+                    : `<span class="bg-amber-500/10 text-amber-400 text-[10px] px-1.5 py-0.5 rounded font-bold border border-amber-500/20">${translations[currentLang]["larger"]}</span>`;
+
+                statusContainer.innerHTML = `
+                    <div class="flex items-center space-x-3 text-right">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-200 font-mono">${formatBytes(fileObj.webpSize)}</p>
+                            <p class="text-[10px] text-slate-500 font-mono mt-0.5">Format WebP</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            ${savingsLabel}
+                        </div>
+                    </div>
+                `;
+
+                // Setup Download Button
+                downloadBtn.classList.remove('hidden');
+                downloadBtn.title = translations[currentLang]['btn-download-title'];
+                downloadBtn.href = fileObj.webpSrc;
+                // Change extension to .webp
+                const originalNameWithoutExt = fileObj.name.substring(0, fileObj.name.lastIndexOf('.')) || fileObj.name;
+                downloadBtn.download = `${originalNameWithoutExt}.webp`;
+                
+                // If compare container matches this active item, refresh the preview
+                if (compareSection.dataset.activeId === fileObj.id) {
+                    showComparison(fileObj.id);
+                }
+            } else if (fileObj.status === 'error') {
+                statusContainer.innerHTML = `
+                    <span class="text-xs text-rose-400 font-medium flex items-center space-x-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <span>${translations[currentLang]["failed"]}</span>
+                    </span>
+                `;
+                downloadBtn.classList.add('hidden');
+            }
+        }
+
+        // Show Interactive Comparison
+        function showComparison(fileId) {
+            const fileObj = imageFiles.find(f => f.id === fileId);
+            if (!fileObj || fileObj.status !== 'success') return;
+
+            compareSection.dataset.activeId = fileId;
+            compareSection.classList.remove('hidden');
+
+            compareOrigImg.src = fileObj.originalSrc;
+            compareWebpImg.src = fileObj.webpSrc;
+
+            compareOrigSize.textContent = `${translations[currentLang]["badge-orig"]}: ${formatBytes(fileObj.originalSize)}`;
+            
+            const savingsText = fileObj.savings > 0 
+                ? `${translations[currentLang]["saved"]} ${fileObj.savings}%` 
+                : `${translations[currentLang]["larger"]} ${Math.abs(fileObj.savings)}%`;
+            compareWebpSize.textContent = `WebP: ${formatBytes(fileObj.webpSize)} (${savingsText})`;
+            
+            // Highlight current visual card
+            document.querySelectorAll('[id^="file-card-"]').forEach(el => {
+                el.classList.remove('border-indigo-500/50', 'bg-slate-800/80');
+            });
+            const activeCard = document.getElementById(`file-card-${fileId}`);
+            if (activeCard) {
+                activeCard.classList.add('border-indigo-500/50', 'bg-slate-800/80');
+            }
+
+            // Scroll smoothly into view
+            compareSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Close comparison
+        closeCompareBtn.addEventListener('click', () => {
+            compareSection.classList.add('hidden');
+            compareSection.dataset.activeId = '';
+            document.querySelectorAll('[id^="file-card-"]').forEach(el => {
+                el.classList.remove('border-indigo-500/50', 'bg-slate-800/80');
+            });
+        });
+
+        // Remove Single File
+        window.removeFile = function(fileId) {
+            const index = imageFiles.findIndex(f => f.id === fileId);
+            if (index !== -1) {
+                const fileObj = imageFiles[index];
+                URL.revokeObjectURL(fileObj.originalSrc);
+                if (fileObj.webpSrc) URL.revokeObjectURL(fileObj.webpSrc);
+                
+                imageFiles.splice(index, 1);
+                
+                const card = document.getElementById(`file-card-${fileId}`);
+                if (card) card.remove();
+
+                if (compareSection.dataset.activeId === fileId) {
+                    compareSection.classList.add('hidden');
+                    compareSection.dataset.activeId = '';
+                }
+
+                updateUIState();
+            }
+        }
+
+        // Clear All Files
+        clearAllBtn.addEventListener('click', () => {
+            imageFiles.forEach(fileObj => {
+                URL.revokeObjectURL(fileObj.originalSrc);
+                if (fileObj.webpSrc) URL.revokeObjectURL(fileObj.webpSrc);
+            });
+            imageFiles = [];
+            fileList.innerHTML = '';
+            compareSection.classList.add('hidden');
+            compareSection.dataset.activeId = '';
+            updateUIState();
+        });
+
+        // Download All Files as a single ZIP or trigger multiple downloads
+        downloadAllBtn.addEventListener('click', async () => {
+            const convertedFiles = imageFiles.filter(f => f.status === 'success');
+            if (convertedFiles.length === 0) return;
+
+            // Loading state for button
+            const origContent = downloadAllBtn.innerHTML;
+            downloadAllBtn.disabled = true;
+            downloadAllBtn.innerHTML = `
+                <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>${translations[currentLang]["compressing-zip"]}</span>
+            `;
+
+            try {
+                const zip = new JSZip();
+                
+                convertedFiles.forEach(fileObj => {
+                    const originalNameWithoutExt = fileObj.name.substring(0, fileObj.name.lastIndexOf('.')) || fileObj.name;
+                    zip.file(`${originalNameWithoutExt}.webp`, fileObj.webpBlob);
+                });
+
+                const content = await zip.generateAsync({ type: 'blob' });
+                const zipUrl = URL.createObjectURL(content);
+
+                const a = document.createElement('a');
+                a.href = zipUrl;
+                a.download = `converted_webp_images_${Date.now()}.zip`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(zipUrl);
+            } catch (error) {
+                console.error(translations[currentLang]["zip-error"], error);
+                // Fallback: download sequential
+                convertedFiles.forEach(fileObj => {
+                    const a = document.createElement('a');
+                    a.href = fileObj.webpSrc;
+                    const originalNameWithoutExt = fileObj.name.substring(0, fileObj.name.lastIndexOf('.')) || fileObj.name;
+                    a.download = `${originalNameWithoutExt}.webp`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+            } finally {
+                downloadAllBtn.disabled = false;
+                downloadAllBtn.innerHTML = origContent;
+            }
+        });
+
+        // Manage UI Visibility State
+        function updateUIState() {
+            if (imageFiles.length > 0) {
+                emptyState.classList.add('hidden');
+                queueContainer.classList.remove('hidden');
+                fileCount.textContent = imageFiles.length;
+            } else {
+                emptyState.classList.remove('hidden');
+                queueContainer.classList.add('hidden');
+                fileCount.textContent = '0';
+            }
+        }
+
+        // Initialize Language on DOM Load
+        document.addEventListener('DOMContentLoaded', initLanguage);
+    </script>
+</body>
+</html>
